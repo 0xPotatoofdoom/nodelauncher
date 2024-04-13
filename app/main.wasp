@@ -2,10 +2,35 @@ app app {
   wasp: {
     version: "^0.13.2"
   },
-  title: "app"
+  title: "app",
+  auth: {
+    // Tells Wasp which entity to use for storing users.
+    userEntity: User,
+    methods: {
+      // Enable username and password auth.
+      usernameAndPassword: {}
+    },
+    // We'll see how this is used in a bit.
+    onAuthFailedRedirectTo: "/login"
+  }
 }
+
+entity User {=psl
+    id       Int    @id @default(autoincrement())
+psl=}
 
 route RootRoute { path: "/", to: MainPage }
 page MainPage {
+  authRequired: true,
   component: import { MainPage } from "@src/MainPage"
+}
+
+route SignupRoute { path: "/signup", to: SignupPage }
+page SignupPage {
+  component: import { SignupPage } from "@src/SignupPage"
+}
+
+route LoginRoute { path: "/login", to: LoginPage }
+page LoginPage {
+  component: import { LoginPage } from "@src/LoginPage"
 }
