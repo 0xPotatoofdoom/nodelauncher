@@ -1,5 +1,5 @@
 const io = require('socket.io-client');
-const socket = io('http://localhost:3005'); // Ensure the URL is correct and includes http://
+const socket = io('http://localhost:3000'); // Ensure the URL is correct and includes http://
 const spawn = require('child_process').spawn;
 
 socket.on('connect', () => {

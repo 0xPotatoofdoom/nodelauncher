@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import './Main.css';
 
-const socket = io('http://localhost:3005');
+const socket = io('http://localhost:3000');
 
 export const MainPage = () => {
   const [logs, setLogs] = useState('');
@@ -15,14 +15,14 @@ export const MainPage = () => {
       console.log('Connected to server');
     });
 
-    socket.on('broadcastLog', (newLog) => {
+    socket.on('log', (newLog) => {
       console.log(`Received new log: ${newLog}`); // Ensure you see this in the console
       setLogs(prevLogs => `${prevLogs}\n${newLog}`);
     });
 
     return () => {
       socket.off('connect');
-      socket.off('broadcastLog');
+      socket.off('log');
       socket.disconnect();
     };
   }, []);
